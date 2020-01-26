@@ -235,5 +235,52 @@ export const Equip = styled.section`
     }
 `;
 
+export const FooterUfalLeft = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
 
+    img {
+        width: 80px;
+        height: 120px;
+    }
 
+    h2 {
+        margin: 0;
+        padding: 25px 20px;
+        color: #fff;
+    }
+`;
+
+export const Sociais = styled.div`
+    display: flex;
+    flex-direction: row;
+
+    svg {
+        &:hover {
+            color: #000 !important;
+            background-color: #fff;
+        }
+    }
+`;
+
+export const FooterRight = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    h6 {
+        color: #fff;
+    }
+
+    div {
+        display: flex;
+
+        img {
+            width: 140px;
+            height: 120px;
+            padding: 15px;
+        }
+    }
+
+    
+`;

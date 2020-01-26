@@ -7,16 +7,20 @@ import {
     About,KeyboardArrowUp, 
     LogoSobre,
     Instructions,
-    Equip
+    Equip,
+    FooterUfalLeft,
+    FooterRight,
+    Sociais
 } from "./styles"
 import {MdKeyboardArrowUp, MdEmail} from "react-icons/md"
 import {IoLogoFacebook, IoLogoLinkedin, IoLogoGithub} from "react-icons/io"
+import {FaInstagram, FaFacebook, FaTwitter, FaYoutube} from "react-icons/fa"
 import {Link} from "react-router-dom"
 import {IconButton, Typography, 
         Grid, useMediaQuery, 
         CardActionArea, CardActions,
         CardContent, CardMedia,
-        Card, Button} from "@material-ui/core"
+        Card} from "@material-ui/core"
 
 import backgroundImage from "../../assets/background_header.jpg"
 import logo from "../../assets/logo-full.png"
@@ -25,6 +29,7 @@ import profileDalgoberto from "../../assets/profile2.jpg"
 import profileValdemir from "../../assets/profile2.jpg"
 import profileAntony from "../../assets/profile2.jpg"
 import profileClovis from "../../assets/profile2.jpg"
+import logoUfalWhite from "../../assets/ufal-white.png"
 
 const useStyles = makeStyles({
     root:{
@@ -72,6 +77,10 @@ const useStyles = makeStyles({
         borderRadius: '40%',
         height: '250px',
         width: '100%'
+    },
+    sociais: {
+        padding: '0 10px',
+        color: '#fff !important',
     }
 })
 
@@ -147,15 +156,15 @@ export default function Home(){
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileItalo
         },
-        {func:"Líder de Projeto", 
-        title:'Ítalo Lima', 
+        {func:"Desenvolvedor", 
+        title:'Clóvis Vieira', 
         description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
         em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileItalo
         },
         {func:"Líder de Projeto", 
-        title:'Ítalo Lima', 
+        title:'Ântones Lima', 
         description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
         em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
@@ -209,7 +218,7 @@ export default function Home(){
                             <Typography>
                             Register surgiu em fevereiro de 2020, advento da 
                             disciplina de Gestão do Conhecimento. O desenvolvimento desta ferramenta
-                            constituiu de tecnoligias de ponta do mercado, atualmennte. Seu Backend foi
+                            constituiu de tecnoligias de ponta do mercado, atualmente. Seu Backend foi
                             desenvolvido em NodeJS e Frontend usou-se a biblioteca React Js e Material-Ui. 
                             Constituindo seu ambiente totalmente desenvolvido com JavaScript.
                             </Typography>
@@ -293,9 +302,41 @@ export default function Home(){
                 </Equip>
             </Grid>
         </Grid>
-        <Grid container>
-            <Grid item xs={12} sm={12} lg={12}>
-
+        <Grid container justify='center' style={{backgroundColor: "#000000", padding: '15px 0'}}>
+            <Grid item xs={12} sm={10} lg={10}>
+                <Grid container direction='row'>
+                    <Grid item xs={12} sm={6} lg={6}>
+                        <Grid container direction='column'>
+                            <FooterUfalLeft>
+                                <img src={logoUfalWhite} />
+                                <h2>Universidade<br/> Federal de Alagoas</h2>
+                            </FooterUfalLeft>
+                            <Sociais>
+                                <a target='_blank' href="http://www.facebook.com/ufaloficial" className={classes.sociais}>
+                                    <FaFacebook style={{borderRadius: '50%'}} size={26}/>
+                                </a>
+                                <a target='_blank' href="http://www.twitter.com/ufaloficial" className={classes.sociais}>
+                                    <FaInstagram style={{borderRadius: '50%'}} size={26}/>
+                                </a>
+                                <a target='_blank' href="http://www.instagram.com/ufaloficial" className={classes.sociais}>
+                                    <FaTwitter style={{borderRadius: '50%'}} size={26}/>
+                                </a>
+                                <a target='_blank' href="http://www.youtube.com/ascomufal" className={classes.sociais}>
+                                    <FaYoutube style={{borderRadius: '50%'}} size={26}/>
+                                </a>
+                            </Sociais>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} sm={6} lg={6}>
+                        <FooterRight>
+                            <div>
+                                <img src={logo} />
+                                <img src={logo} />
+                            </div>
+                            <h6>Desenvolvido por alunos do 7º período</h6>
+                        </FooterRight>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         </>
