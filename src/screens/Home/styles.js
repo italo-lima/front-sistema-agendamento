@@ -178,6 +178,36 @@ export const KeyboardArrowUp = styled.div`
     }
 `;
 
+export const ButtonFixed = styled.div`
+    position:fixed;
+    left:0;
+    bottom:0;
+    margin: 10px;
+    z-index: 2;
+
+    button {
+        padding: 15px;
+        background-color: #76ff03;
+        border: none;
+        color: #fff;
+        border-radius: 10px;
+        transition: background 0.6s;
+        
+        &:hover{
+            background-color: #357a38;
+        }
+    }
+    
+    @media only screen and (min-width:150px) and (max-width:750px){
+        left:10px;
+        bottom:5px;
+        margin: 0px;
+        button {
+            padding: 5px;
+        }
+    }
+`;
+
 export const Instructions = styled.section`
     display:flex;
     align-items: center;
@@ -238,7 +268,7 @@ export const Equip = styled.section`
 export const FooterUfalLeft = styled.div`
     display: flex;
     flex-direction: row;
-    padding: 20px;
+    padding: 20px 0px;
 
     img {
         width: 80px;
@@ -249,6 +279,22 @@ export const FooterUfalLeft = styled.div`
         margin: 0;
         padding: 25px 20px;
         color: #fff;
+    }
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display: flex;
+        justify-content: center;
+        padding: 20px 0px 20px 30px;
+
+        img {
+            width: 60px;
+            height: 80px;
+        }
+
+        h2 {
+            font-size: 22px;
+            padding: 15px 0px 0px 20px;
+        }
     }
 `;
 
@@ -262,11 +308,16 @@ export const Sociais = styled.div`
             background-color: #fff;
         }
     }
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        justify-content: center;
+    }
 `;
 
 export const FooterRight = styled.div`
     display: flex;
     flex-direction: column;
+    padding: 0 20px;
 
     h6 {
         color: #fff;
@@ -274,6 +325,7 @@ export const FooterRight = styled.div`
 
     div {
         display: flex;
+        
 
         img {
             width: 140px;
@@ -281,6 +333,11 @@ export const FooterRight = styled.div`
             padding: 15px;
         }
     }
+    @media only screen and (min-width:150px) and (max-width:750px){
+        align-items: center;
 
-    
+        h6 {
+            margin-bottom: 30px;
+        }
+    }
 `;

@@ -1,27 +1,15 @@
 import React,{useState, useEffect} from "react"
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import Header from "../../components/Header"
-import {
-    Welcome,Agender, 
-    About,KeyboardArrowUp, 
-    LogoSobre,
-    Instructions,
-    Equip,
-    FooterUfalLeft,
-    FooterRight,
-    Sociais
-} from "./styles"
-import {MdKeyboardArrowUp, MdEmail} from "react-icons/md"
-import {IoLogoFacebook, IoLogoLinkedin, IoLogoGithub} from "react-icons/io"
-import {FaInstagram, FaFacebook, FaTwitter, FaYoutube} from "react-icons/fa"
+import {Welcome,Agender, About,KeyboardArrowUp, LogoSobre,Instructions,Equip,FooterUfalLeft,
+        FooterRight,Sociais,ButtonFixed } from "./styles"
+import {FaInstagram, FaFacebook, FaTwitter, FaYoutube, FaEnvelope, FaGithub, 
+        FaLinkedin, FaArrowUp} from "react-icons/fa"
 import {Link} from "react-router-dom"
-import {IconButton, Typography, 
-        Grid, useMediaQuery, 
-        CardActionArea, CardActions,
-        CardContent, CardMedia,
-        Card} from "@material-ui/core"
+import {IconButton, Typography,  Grid, useMediaQuery, CardActionArea, CardActions, CardContent, 
+        CardMedia, Card} from "@material-ui/core"
 
+import Header from "../../components/Header"
 import backgroundImage from "../../assets/background_header.jpg"
 import logo from "../../assets/logo-full.png"
 import profileItalo from "../../assets/profile2.jpg"
@@ -71,17 +59,17 @@ const useStyles = makeStyles({
     card: {
         paddingTop: '0px',
         width: '660px',
-        height: '600px',
+        height: '530px',
       },
     media: {
         borderRadius: '40%',
-        height: '250px',
+        height: '220px',
         width: '100%'
     },
     sociais: {
         padding: '0 10px',
         color: '#fff !important',
-    }
+    },
 })
 
 export default function Home(){
@@ -91,16 +79,18 @@ export default function Home(){
 
     const [buttonInitial, setButtonInitial] = useState(false)
 
-    const getScrool = () => {
-        if(document.documentElement.scrollTop > 400){
+    const getScrool = (e) => {
+        e.preventDefault();
+        if(document.documentElement.scrollTop > 400 && document.documentElement.scrollTop < 2600){
             setButtonInitial(true)
-        } else if(document.documentElement.scrollTop < 230){
+        } else {
             setButtonInitial(false)
         }
     }
 
     useEffect(()=>{
-        window.addEventListener('scroll', getScrool);
+        //window.addEventListener('scroll', getScrool);
+        
     }, [])
 
     const CardProfile = ({profile}) => {
@@ -123,11 +113,11 @@ export default function Home(){
                     {profile.description}
                 </Typography>
                 </CardContent>
-                <CardActions style={{display: 'flex', justifyContent: 'center', }}>
-                    <a href="www.gooogle.com.br"><MdEmail size={32}/></a>
-                    <a><IoLogoFacebook size={32}/></a>
-                    <a><IoLogoLinkedin size={32}/></a>
-                    <a><IoLogoGithub size={32}/></a>
+                <CardActions style={{display: 'flex', justifyContent: 'center', paddingTop:'0'}}>
+                    <a href="www.gooogle.com.br"><FaEnvelope size={32}/></a>
+                    <a><FaFacebook size={32}/></a>
+                    <a><FaLinkedin size={32}/></a>
+                    <a><FaGithub size={32}/></a>
                 </CardActions>      
             </CardActionArea>
         </Card>
@@ -137,36 +127,36 @@ export default function Home(){
     const profiles = [
         {func:"Coordenador do Projeto", 
         title:'Dalgoberto Miquilino', 
-        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
-        em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
+        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. 
+        Pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileDalgoberto
         },
         {func:"Líder de Projeto", 
         title:'Ítalo Lima', 
-        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
-        em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
+        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. 
+        Pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileItalo
         },
         {func:"Desenvolvedor", 
         title:'Valdemir Júnior', 
-        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
-        em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
+        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. 
+        Pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileItalo
         },
         {func:"Desenvolvedor", 
         title:'Clóvis Vieira', 
-        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
-        em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
+        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. 
+        Pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileItalo
         },
         {func:"Líder de Projeto", 
         title:'Ântones Lima', 
-        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. Formado
-        em técnico em informática, pesquisador do grupo de Pesquisa Estudos Avançados
+        description: `Aluno do curso de Sistemas de informação - Unidade Penedo, 7º período. 
+        Pesquisador do grupo de Pesquisa Estudos Avançados
         em Ciência de Dados e Engenharia de Software.`,
         profile: profileItalo
         }
@@ -176,20 +166,27 @@ export default function Home(){
         <>
             <Header/>
             {buttonInitial && 
-                <KeyboardArrowUp>
+                <>
+                <KeyboardArrowUp style={{display: buttonInitial ? 'block' : 'none'}}>
                     <IconButton onClick={() => window.scrollTo(0, 0)}>
-                        <MdKeyboardArrowUp style={{color:"#fff", }}  
+                        <FaArrowUp style={{color:"#fff", }}  
                         size={matches ? 40 : 30 }
                         />
                     </IconButton> 
                 </KeyboardArrowUp>
+                <ButtonFixed>
+                    <Link to='/register'>
+                        <button>AGENDAR AGORA</button>
+                    </Link>
+                </ButtonFixed>
+                </>
             }
             
             <Grid container className={classes.root}>
                 <img className={classes.imgBackground} src={backgroundImage} alt="" />
                 <Grid item xs={12} sm={12} lg={12} className={classes.container}>
                     <Welcome>
-                        <h1>Bem vindo ao Register</h1>
+                        <h1>Bem vindo ao <span>Register</span></h1>
                         <p>Software responsável pelos agendamentos <br/>de equipamentos da UFAL Unidade Penedo </p>
                         <Grid item xs={12} sm={12} lg={12} className={classes.agender}>
                             <Agender>
@@ -205,7 +202,7 @@ export default function Home(){
                     </Welcome>
                 </Grid>
             </Grid>
-             
+            
             <Grid container id="about">
                 <Grid item xs={12} sm={12} lg={12} className={classes.about}>
                     <About>
@@ -285,7 +282,7 @@ export default function Home(){
                     <Grid container direction="column" >
                         <Grid container direction="row" justify="space-around" spacing={5} style={{margin: 0}}>
                             {profiles.map((v, i) => { return i < 2 &&
-                                <Grid item xs={12} sm={5} lg={5} key={i}>
+                                <Grid item xs={12} sm={5} lg={4} key={i}>
                                     <CardProfile profile={v} />
                                 </Grid>}
                             )}
@@ -334,6 +331,7 @@ export default function Home(){
                                 <img src={logo} />
                             </div>
                             <h6>Desenvolvido por alunos do 7º período</h6>
+                            <h6>Sistemas de informação - UFAL Unidade Penedo</h6>
                         </FooterRight>
                     </Grid>
                 </Grid>

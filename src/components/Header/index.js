@@ -1,8 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Drawer, Typography,Toolbar, IconButton, Grid, useMediaQuery} from '@material-ui/core';
-import {MdMenu, MdMessage, MdInfo, MdCheck, MdPages} from "react-icons/md"
+import {FaBars, FaInfo, FaCheck, FaTag, FaUserFriends} from "react-icons/fa"
+import {FaPowerOff} from "react-icons/fa"
 import { useTheme } from '@material-ui/core/styles';
+import {Link} from "react-router-dom"
 
 import logo from "../../assets/logo-icon.png"
 import ufal from "../../assets/ufal.png"
@@ -128,10 +130,11 @@ export default function TemporaryDrawer() {
           <img className={classes.logoMenu} src={logo} />
       </div>
     </div>
-      <div><a className={classes.menuRow} href="#about"><MdInfo size={22}/><h1 className={classes.menuText}>Sobre</h1></a></div>
-      <div><a className={classes.menuRow} href="#instrucoes"><MdPages size={22}/><h1 className={classes.menuText}>Instruções de Uso</h1></a></div>
-      <div><a className={classes.menuRow} href="#equip"><MdMessage size={22}/><h1 className={classes.menuText}>Criado por</h1></a></div>
-      <div className={classes.menuRow}><MdCheck size={22}/><h1 className={classes.menuText}>Agendar Equipamento</h1></div>
+      <div><a className={classes.menuRow} href="initial#about"><FaInfo size={22}/><h1 className={classes.menuText}>Sobre</h1></a></div>
+      <div><a className={classes.menuRow} href="initial#instrucoes"><FaTag size={22}/><h1 className={classes.menuText}>Instruções de Uso</h1></a></div>
+      <div><a className={classes.menuRow} href="initial#equip"><FaUserFriends size={22}/><h1 className={classes.menuText}>Criado por</h1></a></div>
+      <div className={classes.menuRow}><FaCheck size={22}/><h1 className={classes.menuText}>Agendar Equipamento</h1></div>
+      <div className={classes.menuRow}><FaPowerOff size={22}/><h1 className={classes.menuText}>Sair</h1></div>
     </div>
   );
 
@@ -141,15 +144,17 @@ export default function TemporaryDrawer() {
         <Toolbar className={classes.header}>
           <Grid item xs={2} sm={2} lg={2} className={classes.icons}>
             <IconButton className={classes.hover} onClick={toggleDrawer('left', true)} color="inherit" aria-label="menu">
-              <MdMenu  />
+              <FaBars  />
             </IconButton>
           </Grid>
           <Grid item xs={6} sm={6} lg={6} className={classes.register}>
-            <img src={logo} className={classes.logo}/>
-            {matches ? <Typography className={classes.nameRegister}>Register</Typography>
-            : 
-            null
-            }
+            <Link to='/' className={classes.register}>
+              <img src={logo} className={classes.logo}/>
+              {matches ? <Typography className={classes.nameRegister}>Register</Typography>
+              : 
+              null
+              }
+            </Link>
           </Grid>
 
           <Grid item xs={4} sm={4} lg={4} className={classes.logosRight}>
