@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {Welcome,Agender, About,KeyboardArrowUp, LogoSobre,Instructions,Equip,FooterUfalLeft,
         FooterRight,Sociais,ButtonFixed } from "./styles"
 import {FaInstagram, FaFacebook, FaTwitter, FaYoutube, FaEnvelope, FaGithub, 
-        FaLinkedin, FaArrowUp} from "react-icons/fa"
+        FaLinkedin, FaArrowUp, FaClock} from "react-icons/fa"
 import {Link} from "react-router-dom"
 import {IconButton, Typography,  Grid, useMediaQuery, CardActionArea, CardActions, CardContent, 
         CardMedia, Card} from "@material-ui/core"
@@ -48,8 +48,9 @@ const useStyles = makeStyles({
     },
     about:{
         width: '100%',
-        backgroundColor: '#fff',
-        paddingBottom: '30px'
+        backgroundColor: '#0095DA',
+        paddingBottom: '30px',
+        color: '#fff',
     },
     instructions: {
         backgroundColor:'#0095DA',
@@ -70,6 +71,19 @@ const useStyles = makeStyles({
         padding: '0 10px',
         color: '#fff !important',
     },
+    btnAdmin:{
+        position:'absolute',
+        right: "20px", 
+        top:'0',
+        padding: '15px',
+        backgroundColor:'#0095DA',
+        border: 'none',
+        color: '#fff',
+        transition: 'background 1s',
+        '&:hover': {
+            background: '#2a3eb1'
+        }
+    }
 })
 
 export default function Home(){
@@ -78,6 +92,7 @@ export default function Home(){
     const classes = useStyles();
 
     const [buttonInitial, setButtonInitial] = useState(false)
+    const [admin, setAdmin] = useState(false)
 
     const getScrool = (e) => {
         e.preventDefault();
@@ -90,7 +105,10 @@ export default function Home(){
 
     useEffect(()=>{
         //window.addEventListener('scroll', getScrool);
-        
+        const user = localStorage.getItem('@register:user');
+        const userParse = JSON.parse(user)
+        userParse.role=='admin' && setAdmin(true);
+
     }, [])
 
     const CardProfile = ({profile}) => {
@@ -185,12 +203,13 @@ export default function Home(){
             <Grid container className={classes.root}>
                 <img className={classes.imgBackground} src={backgroundImage} alt="" />
                 <Grid item xs={12} sm={12} lg={12} className={classes.container}>
+                    <Link to='/admin'><button className={classes.btnAdmin}>Acessar Admin</button></Link>
                     <Welcome>
-                        <h1>Bem vindo ao <span>Register</span></h1>
-                        <p>Software responsável pelos agendamentos <br/>de equipamentos da UFAL Unidade Penedo </p>
+                        <h1>Bem vindo ao Register</h1>
+                        <p>Software responsável para agendamentos <br/>dos equipamentos da UFAL Unidade Penedo </p>
                         <Grid item xs={12} sm={12} lg={12} className={classes.agender}>
                             <Agender>
-                                <h2>Reliaze seu agendamento agora</h2>
+                                <h2>Realiaze seu agendamento agora</h2>
                                 <span>rápido e fácil</span>
                                 <Link to='/register'>
                                     <button> 
@@ -202,7 +221,60 @@ export default function Home(){
                     </Welcome>
                 </Grid>
             </Grid>
-            
+            <Grid container>
+                <Grid item xs={12} sm={12} lg={12} className={classes.instructions}>
+                    <Instructions id="instrucoes">
+                        <h1>Instruções de Uso</h1>
+                        <div>
+                            <Typography>
+                                Register está em sua primeira versão, desse modo, problemas podem surgir
+                                ao realizar agendamento de equipamentos, caso chegue a ocorrer algum problema,
+                                pedimos que entre em contato com admistrador desta plataforma e reporte
+                                o problema ocasionado, para que assim possamos evoluir esta ferramenta.
+                            </Typography>
+                            <Typography>
+                                Esta plataforma usa WebSocket, comunicação bidirecional em tempo real, portanto,
+                                qualquer cancelamento de registro será atualizado instantaneamente. Para
+                                que possa ter acesso as funcionalidades do Register, necessita-se criação de
+                                conta, mas está funcionadade é realizada exclusivamente pelo administrador,
+                                para garantir que pessoas externas evitem usar esta ferramenta, evitando possíveis
+                                transtornos para os usuários. 
+                            </Typography>
+                            <Typography>
+                                Para retirada do equipamento, previamente agendado, necessita-se confirmar
+                                a retirada do equipamento, após o término, realizar a confirmação de entrega
+                                do equipamento. Assim podemos ter um controle real de tudo que acontece com
+                                nossos equipamentos. Cada registro terá tolerância de tempo, <FaClock size={14} /> 10 minutos,
+                                para retirada, caso ultrapasse este tempo, agendamento será cancelado imediatamente.
+                            </Typography>
+                        </div>
+                    </Instructions>
+                </Grid>    
+            </Grid>  
+
+            <Grid>
+                <Equip id="equip">
+                    <h1>Equipe</h1>
+                    <Grid container direction="column" >
+                        <Grid container direction="row" justify="space-around" spacing={5} style={{margin: 0}}>
+                            {profiles.map((v, i) => { return i < 2 &&
+                                <Grid item xs={12} sm={5} lg={4} key={i}>
+                                    <CardProfile profile={v} />
+                                </Grid>}
+                            )}
+                            
+                        </Grid>
+                        <Grid container direction="row" justify="space-around" spacing={5} style={{margin: 0}}>
+                            {profiles.map((v, i) => { return i >= 2 &&
+                                    <Grid item xs={12} sm={5} lg={4} key={i}>
+                                        <CardProfile profile={v} />
+                                    </Grid>}
+                            )}
+                        </Grid>
+                    </Grid>
+                </Equip>
+            </Grid>
+
             <Grid container id="about">
                 <Grid item xs={12} sm={12} lg={12} className={classes.about}>
                     <About>
@@ -214,7 +286,8 @@ export default function Home(){
                         <div>
                             <Typography>
                             Register surgiu em fevereiro de 2020, advento da 
-                            disciplina de Gestão do Conhecimento. O desenvolvimento desta ferramenta
+                            disciplina de Gestão do Conhecimento, ministrada no curso de Sistemas
+                            de Informação. O desenvolvimento desta ferramenta
                             constituiu de tecnoligias de ponta do mercado, atualmente. Seu Backend foi
                             desenvolvido em NodeJS e Frontend usou-se a biblioteca React Js e Material-Ui. 
                             Constituindo seu ambiente totalmente desenvolvido com JavaScript.
@@ -242,61 +315,6 @@ export default function Home(){
                         </div>
                     </div>
                 </About>
-            </Grid>
-        </Grid>
-            
-        <Grid container>
-            <Grid item xs={12} sm={12} lg={12} className={classes.instructions}>
-                <Instructions id="instrucoes">
-                    <h1>Instruções de Uso</h1>
-                    <div>
-                        <Typography>
-                            Register está em sua primeira versão, desse modo, problemas podem surgir
-                            ao realizar agendamento de equipamentos, caso chegue a ocorrer algum problema,
-                            pedimos que entre em contato com admistrador desta plataforma e reporte
-                            o problema ocasionado, para que assim possamos evoluir esta ferramenta.
-                        </Typography>
-                        <Typography>
-                            Esta plataforma usa WebSocket, comunicação bidirecional em tempo real, portanto,
-                            qualquer cancelamento de registro será atualizado instantaneamente. Para
-                            que possa ter acesso as funcionalidades do Register, necessita-se criação de
-                            conta, mas está funcionadade é realizada exclusivamente pelo administrador,
-                            para garantir que pessoas externas evitem usar esta ferramenta, evitando possíveis
-                            transtornos para os usuários. 
-                        </Typography>
-                        <Typography>
-                            Para retirada do equipamento, previamente agendado, necessita-se confirmar
-                            a retirada do equipamento, após o término, realizar a confirmação de entrega
-                            do equipamento. Assim podemos ter um controle real de tudo que acontece com
-                            nossos equipamentos. Cada registro terá tolerância de tempo, 10 minutos,
-                            para retirada, caso ultrapasse este tempo, agendamento será cancelado imediatamente.
-                        </Typography>
-                    </div>
-                </Instructions>
-            </Grid>    
-        </Grid>   
-        <Grid>
-            <Grid>
-                <Equip id="equip">
-                    <h1>Equipe</h1>
-                    <Grid container direction="column" >
-                        <Grid container direction="row" justify="space-around" spacing={5} style={{margin: 0}}>
-                            {profiles.map((v, i) => { return i < 2 &&
-                                <Grid item xs={12} sm={5} lg={4} key={i}>
-                                    <CardProfile profile={v} />
-                                </Grid>}
-                            )}
-                            
-                        </Grid>
-                        <Grid container direction="row" justify="space-around" spacing={5} style={{margin: 0}}>
-                            {profiles.map((v, i) => { return i >= 2 &&
-                                    <Grid item xs={12} sm={5} lg={4} key={i}>
-                                        <CardProfile profile={v} />
-                                    </Grid>}
-                            )}
-                        </Grid>
-                    </Grid>
-                </Equip>
             </Grid>
         </Grid>
         <Grid container justify='center' style={{backgroundColor: "#000000", padding: '15px 0'}}>

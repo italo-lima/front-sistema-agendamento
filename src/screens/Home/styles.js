@@ -6,6 +6,7 @@ export const Welcome = styled.div`
     h1{
         color: #fafafa;
         font-size: 32px;
+        font-weight: bold;
     }
 
     p {

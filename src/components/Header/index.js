@@ -5,6 +5,7 @@ import {FaBars, FaInfo, FaCheck, FaTag, FaUserFriends} from "react-icons/fa"
 import {FaPowerOff} from "react-icons/fa"
 import { useTheme } from '@material-ui/core/styles';
 import {Link} from "react-router-dom"
+import history from "../../services/history"
 
 import logo from "../../assets/logo-icon.png"
 import ufal from "../../assets/ufal.png"
@@ -103,7 +104,7 @@ const useStyles = makeStyles({
 
 });
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer(props) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
@@ -118,6 +119,15 @@ export default function TemporaryDrawer() {
     setState({ ...state, [side]: open });
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('@register:token');
+    localStorage.removeItem('@register:user');
+
+    alert("Até breve!!!");
+
+    history.push('/');
+  };
+
   const sideList = side => (
     <div
       className={classes.list}
@@ -130,11 +140,21 @@ export default function TemporaryDrawer() {
           <img className={classes.logoMenu} src={logo} />
       </div>
     </div>
-      <div><a className={classes.menuRow} href="initial#about"><FaInfo size={22}/><h1 className={classes.menuText}>Sobre</h1></a></div>
-      <div><a className={classes.menuRow} href="initial#instrucoes"><FaTag size={22}/><h1 className={classes.menuText}>Instruções de Uso</h1></a></div>
-      <div><a className={classes.menuRow} href="initial#equip"><FaUserFriends size={22}/><h1 className={classes.menuText}>Criado por</h1></a></div>
-      <div className={classes.menuRow}><FaCheck size={22}/><h1 className={classes.menuText}>Agendar Equipamento</h1></div>
-      <div className={classes.menuRow}><FaPowerOff size={22}/><h1 className={classes.menuText}>Sair</h1></div>
+      <div><a className={classes.menuRow} href="initial#instrucoes">
+          <FaTag size={22}/><h1 className={classes.menuText}>Instruções de Uso</h1></a>
+      </div>
+      <div><Link to="/register" className={classes.menuRow}>
+        <FaCheck size={22}/><h1 className={classes.menuText}>Agendar Equipamento</h1></Link>
+      </div>
+      <div><a className={classes.menuRow} href="initial#equip">
+          <FaUserFriends size={22}/><h1 className={classes.menuText}>Criado por</h1></a>
+      </div>
+      <div><a className={classes.menuRow} href="initial#about">
+          <FaInfo size={22}/><h1 className={classes.menuText}>Sobre</h1></a>
+      </div>
+      <div><a className={classes.menuRow} href="" style={{width:'100%'}} onClick={handleSignOut}>
+        <FaPowerOff size={22}/><h1 className={classes.menuText}>Sair</h1></a>
+      </div>
     </div>
   );
 

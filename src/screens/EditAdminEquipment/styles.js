@@ -3,29 +3,22 @@ import {darken} from "polished"
 
 export const Wrapper = styled.div`
 height: 100%;
-background: linear-gradient(-60deg, darken(0.08, #f5f5f5), #f5f5f5);
-display: flex;
-align-items: center;
-justify-content: center;
+background: #f5f5f5;
+padding-top:60px;
+display:flex;
+align-items:center;
+flex-direction:column;
 `;
 
 export const Content = styled.div`
 width: 100%;
-max-width: 315px;
+max-width: 420px;
 text-align: center;
-
-    div {
-        padding: 10px;
-
-        p{
-            font-size:28px;
-            font-weight:bold;
-        }
-    }
-
+display: flex;
+    
     form {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         margin-top: 30px;
 
         input {
@@ -35,10 +28,11 @@ text-align: center;
             height: 44px;
             padding: 0 15px;
             color: #000;
-            margin: 0 0 10px;
+            margin: 10px;
+            max-width: 190px;
 
             &::placeholder{
-                color: rgba(0,0,0,.9)
+                color: rgba(000,000,000,.7)
             }
         }
 
@@ -51,12 +45,13 @@ text-align: center;
 
         button{
             height: 44px;
-            margin: 5px 0 0;
+            margin: 5px 10px 0;
             background: ${darken(0.08, '#0095DA')};
             font-weight: bold;
-            color: #fff;
+            color: #000;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 20px;
+            padding:10px 15px;
             border: none;
             transition: background 0.8s;
 
@@ -66,7 +61,7 @@ text-align: center;
         }
 
         a {
-            color: #fff;
+            color: #000;
             margin-top: 15px;
             font-size: 15px;
             opacity: 0.8;
