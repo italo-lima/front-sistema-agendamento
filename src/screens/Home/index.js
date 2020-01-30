@@ -71,19 +71,6 @@ const useStyles = makeStyles({
         padding: '0 10px',
         color: '#fff !important',
     },
-    btnAdmin:{
-        position:'absolute',
-        right: "20px", 
-        top:'0',
-        padding: '15px',
-        backgroundColor:'#0095DA',
-        border: 'none',
-        color: '#fff',
-        transition: 'background 1s',
-        '&:hover': {
-            background: '#2a3eb1'
-        }
-    }
 })
 
 export default function Home(){
@@ -92,7 +79,6 @@ export default function Home(){
     const classes = useStyles();
 
     const [buttonInitial, setButtonInitial] = useState(false)
-    const [admin, setAdmin] = useState(false)
 
     const getScrool = (e) => {
         e.preventDefault();
@@ -105,10 +91,7 @@ export default function Home(){
 
     useEffect(()=>{
         //window.addEventListener('scroll', getScrool);
-        const user = localStorage.getItem('@register:user');
-        const userParse = JSON.parse(user)
-        userParse.role=='admin' && setAdmin(true);
-
+        
     }, [])
 
     const CardProfile = ({profile}) => {
@@ -203,7 +186,6 @@ export default function Home(){
             <Grid container className={classes.root}>
                 <img className={classes.imgBackground} src={backgroundImage} alt="" />
                 <Grid item xs={12} sm={12} lg={12} className={classes.container}>
-                    <Link to='/admin'><button className={classes.btnAdmin}>Acessar Admin</button></Link>
                     <Welcome>
                         <h1>Bem vindo ao Register</h1>
                         <p>Software responsável para agendamentos <br/>dos equipamentos da UFAL Unidade Penedo </p>

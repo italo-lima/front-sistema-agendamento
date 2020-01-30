@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Drawer, Typography,Toolbar, IconButton, Grid, useMediaQuery} from '@material-ui/core';
-import {FaBars, FaInfo, FaCheck, FaTag, FaUserFriends} from "react-icons/fa"
+import {FaBars, FaInfo, FaCheck, FaTag, FaUserFriends, FaUserLock} from "react-icons/fa"
 import {FaPowerOff} from "react-icons/fa"
 import { useTheme } from '@material-ui/core/styles';
 import {Link} from "react-router-dom"
@@ -100,16 +100,28 @@ const useStyles = makeStyles({
     fontSize: '16px',
     paddingLeft: '15px',
     margin: 0
-  }
-
+  },
+  btnAdmin:{
+    padding: '15px',
+    border: 'none',
+    color: '#fff'
+}
 });
 
-export default function TemporaryDrawer(props) {
+export default function TemporaryDrawer() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
 
-  const [state, setState] = React.useState({left: false});
+  const [state, setState] = useState({left: false});
+  const [admin, setAdmin] = useState(false)
+
+  useEffect(() => {
+      const user = localStorage.getItem('@register:user');
+      const userParse = JSON.parse(user)
+      userParse.role=='admin' && setAdmin(true);
+  }, [])
+
 
   const toggleDrawer = (side, open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -140,6 +152,12 @@ export default function TemporaryDrawer(props) {
           <img className={classes.logoMenu} src={logo} />
       </div>
     </div>
+    {admin && 
+      <div><Link to='/admin' className={classes.menuRow}>
+            <FaUserLock size={22}/><h1 className={classes.menuText}>Acessar Admin</h1>
+          </Link>
+      </div>      
+      }
       <div><a className={classes.menuRow} href="initial#instrucoes">
           <FaTag size={22}/><h1 className={classes.menuText}>Instruções de Uso</h1></a>
       </div>
@@ -147,7 +165,7 @@ export default function TemporaryDrawer(props) {
         <FaCheck size={22}/><h1 className={classes.menuText}>Agendar Equipamento</h1></Link>
       </div>
       <div><a className={classes.menuRow} href="initial#equip">
-          <FaUserFriends size={22}/><h1 className={classes.menuText}>Criado por</h1></a>
+          <FaUserFriends size={22}/><h1 className={classes.menuText}>Equipe</h1></a>
       </div>
       <div><a className={classes.menuRow} href="initial#about">
           <FaInfo size={22}/><h1 className={classes.menuText}>Sobre</h1></a>
