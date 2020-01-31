@@ -6,6 +6,7 @@ import {FaPowerOff} from "react-icons/fa"
 import { useTheme } from '@material-ui/core/styles';
 import {Link} from "react-router-dom"
 import history from "../../services/history"
+import {toast} from "react-toastify"
 
 import logo from "../../assets/logo-icon.png"
 import ufal from "../../assets/ufal.png"
@@ -135,7 +136,7 @@ export default function TemporaryDrawer() {
     localStorage.removeItem('@register:token');
     localStorage.removeItem('@register:user');
 
-    alert("Até breve!!!");
+    toast.error("Até breve!!!")
 
     history.push('/');
   };

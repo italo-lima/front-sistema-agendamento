@@ -1,5 +1,8 @@
 import React,{useState, useEffect} from "react"
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {decode} from "jsonwebtoken"
+import history from "../../services/history"
+import {toast} from "react-toastify"
 
 import {Welcome,Agender, About,KeyboardArrowUp, LogoSobre,Instructions,Equip,FooterUfalLeft,
         FooterRight,Sociais,ButtonFixed } from "./styles"
@@ -91,7 +94,16 @@ export default function Home(){
 
     useEffect(()=>{
         //window.addEventListener('scroll', getScrool);
-        
+        const token = localStorage.getItem('@register:token');
+        const {exp} = decode(token)
+        const dateNow = Math.round(new Date().getTime() / 1000)
+        if(dateNow > exp){
+            localStorage.removeItem('@register:token');
+            localStorage.removeItem('@register:user');
+
+            toast.error("Realiaze seu login novamente")
+            history.push('/');
+        }
     }, [])
 
     const CardProfile = ({profile}) => {
