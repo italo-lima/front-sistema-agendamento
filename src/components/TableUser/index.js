@@ -1,91 +1,62 @@
-import React, {useState} from 'react';
-import {Grid, Typography} from "@material-ui/core"
-import {makeStyles} from "@material-ui/core/styles"
-import {Form, Input, Check} from "@rocketseat/unform"
-import * as Yup from "yup"
-import {Content} from "./styles"
+import React,{useState} from 'react';
+import {Grid} from "@material-ui/core"
+import {Table} from "./styles"
+import {FaTrash} from "react-icons/fa"
 import {toast} from "react-toastify"
 
 import api from "../../services/api"
 
-//validação dos dados do form
-const schema = Yup.object().shape({
-    first_name: Yup.string()
-    .required("Nome Obrigatório"),
-    last_name: Yup.string()
-    .required("Sobrenome Obrigatório"),
-    email: Yup.string('E-mail Inválido')
-    .required('E-mail obrigatório'),
-    password: Yup.string().required("Senha Obrigatória"),
-    office: Yup.string()
-    .required('Cargo Obrigatório'),
-    registration: Yup.string()
-    .required('Registro Obrigatório')
-  })
+export default function TableUser({users, typeAction}) {
 
-  const useStyles = makeStyles({
-      check:{
-        display: 'flex', 
-        height:'35px', 
-        alignItems:'center', 
-        padding:"0px 10px"
-      }
-  })
+  const removeUser = async (id) => {
 
-export default function TableUser({title, typeRole}) {
-    const classes = useStyles();
+    const token = localStorage.getItem('@register:token');
 
-    const [loading, setLoading] = useState(false)
-    const [check, setCheck] = useState(false)
-    const [user, setUser] = useState({})
-
-    const initialData = {
-        first_name: user.first_name ? user.first_name : '', 
-        last_name: user.last_name ? user.last_name : '', 
-        registration:user.registration ? user.registration : '',
-        email:user.email ? user.email : '', 
-        office:user.office ? user.office : '',
-        role:user.role ? user.role : false,
+    try{
+        await api.delete(`users/${id}`, {headers: {
+            Authorization: `Bearer ${token}`,
+        }})
+        toast.success("Usuário Excluído com sucesso!")
+        setTimeout(function() {
+          window.location.reload()
+        }, 3000)
+    } catch(e){
+        toast.error("Erro ao excluir usuário")
     }
+  }
 
-    async function handleSubmit(data){
-        setLoading(true)
-        data.role = check ? 'admin' : 'user'
+  return (
+    <Grid item container xs={12} lg={12} xs={12} justify="center" style={{bottom:'10px',overflow:'auto', padding: '10px 0px'}}>
+      <Grid item xs={12} lg={10} sm={10} >
+        <Table>
+        <thead>
+            <tr>
+              <th>Primeiro Nome</th>
+              <th>Segundo Nome</th>
+              <th>E-mail</th>
+              <th>Registro</th>
+              <th>Cargo</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.id}>
+                <td>{user.first_name}</td>
+                <td>{user.last_name}</td>
+                <td>{user.email}</td>
+                <td>{user.registration}</td>
+                <td>{user.office}</td>
+                <td><button disabled= {typeAction == 'index' ? true : false} 
+                        style={{border: 'none', backgroundColor:'transparent'}}
+                        onClick={() => removeUser(user.id)}><FaTrash size={20}/>
+                    </button></td>
+            </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Grid>
+    </Grid>
+  )
 
-        try{
-            await api.post('users', data)
-            setLoading(true)
-            toast.success("Usuário cadastrado com sucesso!")
-        } catch(e){
-            setLoading(false)
-            toast.error("Erro ao cadastrar usuário")
-        }
-    }
-
-    const loadUser = async () => {
-        const resp = typeRole =='edit' && await api.get('')
-    }
-
-    return(
-        <>
-            <Grid>
-                <Typography style={{padding:'10px'}} variant="h5">{title}</Typography>
-            </Grid>
-            <Content>
-                <Form schema={schema} onSubmit={handleSubmit} initialData={initialData}>
-                    <Input name="first_name" placeholder="Primeiro Nome" />
-                    <Input name="last_name" placeholder="Último Nome" />
-                    <Input name="registration" placeholder="Registro" />
-                    <Input name="email" type="email" placeholder="E-mail" />
-                    <Input name="password" type="password" placeholder="Senha" />
-                    <Input name="office" placeholder="Cargo" />
-                    <div className={classes.check}>
-                        <Check name="role" style={{margin:0}} label="Admin" onChange={(e) => setCheck(e.target.checked)}/>
-                    </div>
-                    
-                    <button type="submit">{loading ? 'Carregando...' : 'Criar'}</button>
-                </Form>
-            </Content>
-        </>
-    )
 }

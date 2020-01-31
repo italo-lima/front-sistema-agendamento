@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Wrapper} from "./styles"
 import Header from "../../components/Header"
@@ -7,6 +7,7 @@ import {makeStyles} from "@material-ui/core/styles"
 import {FaUserTag, FaUserTimes, FaUserPlus, FaUserEdit} from "react-icons/fa"
 
 import api from "../../services/api"
+import FormUser from "../../components/FormUser"
 import TableUser from "../../components/TableUser"
 
 const useStyles = makeStyles({
@@ -46,10 +47,15 @@ export default function EditAdminUser (){
   const classes = useStyles()
   const [type, setType] = useState(null)
   const [users, setUsers] = useState([])
+  const [selectUser, setSelectUser] = useState({})
 
   const handleType = (type) => {
       setType(type)
-      console.log("type", type)
+  }
+
+  const findSelectUser = (e) => {
+    const user = users.find(user => user.id == e.target.value)
+    !!user ? setSelectUser(user) : setSelectUser({})
   }
 
   const loadUsers = async ()=>{
@@ -59,8 +65,11 @@ export default function EditAdminUser (){
     }})
     
     setUsers(resp.data)
-    console.log("res", resp.data)
   }
+
+  useEffect(() => {
+    loadUsers()
+  }, [])
 
   return (
       <>
@@ -72,7 +81,7 @@ export default function EditAdminUser (){
         <Grid container justify="center" item xs={12} lg={11} sm={11} style={{maxHeight: '150px'}}>
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => handleType('create')}>
+              <button className={classes.btnOpc} onClick={() => {handleType('create'); setSelectUser({})}}>
                 <FaUserPlus className={classes.icon} size={22} />
                 <Typography>CRIAR USUÁRIO</Typography>
               </button>
@@ -93,16 +102,16 @@ export default function EditAdminUser (){
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => handleType('index')}>
+              <button className={classes.btnOpc} onClick={() => {handleType('index');setSelectUser({})}}>
                 <FaUserTag className={classes.icon} size={22} />
-                <Typography>BUSCAR USUÁRIO</Typography>
+                <Typography>VISUALIZAR USUÁRIOS</Typography>
               </button>
             </Grid>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => handleType('delete')}>
+              <button className={classes.btnOpc} onClick={() => {handleType('delete');setSelectUser({})}}>
                 <FaUserTimes className={classes.icon} size={22} />
                 <Typography>EXCLUIR USUÁRIO</Typography>
               </button>
@@ -113,18 +122,30 @@ export default function EditAdminUser (){
 
         {/* Table create and edit */}
         {type === 'create' && 
-          <TableUser title="Criar Usuário" typeRole="create" />
+          <FormUser title="Criar Usuário" typeAction={type} nameButton={"Criar"}/>
         }
         {type === 'edit' && 
-          <div>
-            <h1>Edit</h1>
-          </div>
+         <>
+         <select style={{padding: '10px', backgroundColor:"#fff", marginTop:'20px'}} onChange={findSelectUser}>
+            <option>Escolha Usuário</option>
+            {users.length && users.map(user => 
+            <option key={user.id} value={user.id}>
+              {user.first_name} {user.last_name}
+            </option>
+        )}
+         </select>
+         
+         {selectUser && <FormUser nameButton={"Atualizar"}
+            user={selectUser} typeAction={type} title="Escolha usuário para editar" />}
+         </>
         }
         {type === 'index' && 
-          <h1>BUSCAR</h1>
+          <>
+            {users.length>0 && <TableUser typeAction={'index'} users={users} />}
+          </>
         }
         {type === 'delete' && 
-          <h1>Deletar</h1>
+          users.length>0 && <TableUser typeAction={'remove'} users={users} />
         }
       </Wrapper>
       </>
