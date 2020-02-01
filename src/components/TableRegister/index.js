@@ -47,6 +47,7 @@ export default function TableRegister({registers, typeAction}) {
       setRegist(objUser)
   }, [])
 
+
   return (
     <Grid item container xs={12} lg={12} xs={12} justify="center" style={{bottom:'10px',overflow:'auto', padding: '10px 0px'}}>
       <Grid item xs={12} lg={10} sm={10} >
