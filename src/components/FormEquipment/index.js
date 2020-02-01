@@ -28,7 +28,7 @@ const schema = Yup.object().shape({
       }
   })
 
-export default function FormEquipment({title, equipment={}, loadEquipments, typeAction,nameButton}) {
+export default function FormEquipment({title, equipment={}, typeAction,nameButton}) {
     const classes = useStyles();
 
     const [loading, setLoading] = useState(false)
@@ -50,7 +50,7 @@ export default function FormEquipment({title, equipment={}, loadEquipments, type
             try{
                 await api.post('equipment', data, {headers: {
                     Authorization: `Bearer ${token}`,
-                }}).then(loadEquipments())
+                }})
                 setLoading(false)
                 toast.success("Equipamento cadastrado com sucesso!")
             } catch(e){

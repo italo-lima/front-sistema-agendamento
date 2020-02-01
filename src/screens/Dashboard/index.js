@@ -3,8 +3,9 @@ import {Grid} from "@material-ui/core"
 import {BarChart, PieChart, LineChart} from 'react-d3-components'
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
-import {FaUser, FaDesktop, FaUsers, FaPaste} from "react-icons/fa"
+import {FaUser, FaDesktop, FaUsers, FaPaste, FaClipboardCheck} from "react-icons/fa"
 import {Link} from 'react-router-dom'
+import api from "../../services/api"
 
 import Header from "../../components/Header"
 import {Menu, BoxInfo, Graph} from "./styles"
@@ -58,7 +59,28 @@ const useStyles = makeStyles({
 export default function Dashboard(){
     const classes = useStyles();
     const [loading, setLoading] = useState(false)
-   
+    const [countUsers, setCountUsers] = useState(false)
+    const [countEquipments, setCountEquipments] = useState(false)
+    
+    const loadUsers = async (token) => {
+        const users = await api.get('users', {headers: {
+            Authorization: `Bearer ${token}`}})
+        setCountUsers(users.data.length)
+    }
+
+    const loadEquipments = async (token) => {
+        const equipments = await api.get('equipment', {headers: {
+            Authorization: `Bearer ${token}`}})
+        setCountEquipments(equipments.data.length)
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem('@register:token');
+
+       loadUsers(token); 
+       loadEquipments(token);
+    }, [])
+
     return(
         <>
         <Header />
@@ -78,6 +100,12 @@ export default function Dashboard(){
                                 <h1 className={classes.title}>Equipamentos</h1>
                             </button>
                         </Link>
+                        <Link to='/admin/edit/register'>
+                            <button  className={classes.menuRow}>
+                                <FaClipboardCheck size={22} />
+                                <h1 className={classes.title}>Registros</h1>
+                            </button>
+                        </Link>
                         </Menu>
                     </Card>
                 </Grid>
@@ -89,7 +117,7 @@ export default function Dashboard(){
                                     <Typography>Total de Usuários Cadastrados</Typography>
                                     <div className={classes.cardBody}>
                                         <FaUsers size={25} style={{marginRight: '15px'}}/>
-                                        <Typography variant="h4" >18</Typography>
+                                            <Typography variant="h4">{countUsers}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -98,7 +126,7 @@ export default function Dashboard(){
                                     <Typography>Total de Equipaentos Cadastrados</Typography>
                                     <div className={classes.cardBody}>
                                     <FaDesktop size={25} style={{marginRight: '15px'}}/>
-                                        <Typography variant="h4">08</Typography>
+                                        <Typography variant="h4">{countEquipments}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>

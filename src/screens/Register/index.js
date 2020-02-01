@@ -108,7 +108,7 @@ export default function Register () {
                             <Typography>Registros para o dia atual: 2</Typography>
                         </CardInfo>
                     </Grid>
-                     
+                    
                    {/* <Grid container item lg={4} sm={4} xs={3} justify="center">
                         <button className={classes.button}>Confirmar retirada</button>
                         <button className={classes.button}>Confirmar entrega</button>

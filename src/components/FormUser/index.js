@@ -45,7 +45,7 @@ const schemaCreate = Yup.object().shape({
       }
   })
 
-export default function FormUser({title, user={}, loadUsers, typeAction,nameButton}) {
+export default function FormUser({title, user={}, typeAction, nameButton}) {
     const classes = useStyles();
 
     const [loading, setLoading] = useState(false)

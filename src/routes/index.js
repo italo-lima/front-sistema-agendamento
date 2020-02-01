@@ -10,6 +10,7 @@ import Home from "../screens/Home"
 import EditProfile from "../screens/EditProfile"
 import EditAdminUser from "../screens/EditAdminUser"
 import EditAdminEquipment from "../screens/EditAdminEquipment"
+import EditAdminRegister from "../screens/EditAdminRegister"
 
 export default function Routes(){
     return(
@@ -22,6 +23,7 @@ export default function Routes(){
             <Route exact path='/admin' component={Dashboard} isPrivate/>
             <Route exact path='/admin/edit/user' component={EditAdminUser} isPrivate/>
             <Route exact path='/admin/edit/equipment' component={EditAdminEquipment} isPrivate/>
+            <Route exact path='/admin/edit/register' component={EditAdminRegister} isPrivate/>
 
             <Route path='/' component={() => <h1>404</h1>} />
         </Switch>

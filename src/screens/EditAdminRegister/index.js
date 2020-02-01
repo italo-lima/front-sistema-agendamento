@@ -7,7 +7,7 @@ import {makeStyles} from "@material-ui/core/styles"
 import {FaPlus, FaTrashRestore, FaSearch, FaEdit} from "react-icons/fa"
 
 import api from "../../services/api"
-import FormEquipment from "../../components/FormEquipment"
+import FormRegister from "../../components/FormRegister"
 import TableEquipment from "../../components/TableEquipment"
 
 const useStyles = makeStyles({
@@ -42,20 +42,15 @@ const useStyles = makeStyles({
   }
 })
 
-export default function EditAdminUser (){
+export default function EditAdminRegister (){
 
   const classes = useStyles()
   const [type, setType] = useState(null)
   const [equipments, setEquipments] = useState([])
-  const [selectEquipment, setSelectEquipment] = useState({})
+  const [user, setUser] = useState({})
 
   const handleType = (type) => {
       setType(type)
-  }
-
-  const findSelectEquipment = (e) => {
-    const equipment = equipments.find(equipment => equipment.id == e.target.value)
-    !!equipment ? setSelectEquipment(equipment) : setSelectEquipment({})
   }
 
   const loadEquipments = async ()=>{
@@ -68,6 +63,9 @@ export default function EditAdminUser (){
   }
 
   useEffect(() => {
+    const resp = localStorage.getItem('@register:user');
+    const {id} = JSON.parse(resp)
+    setUser(id)
     loadEquipments()
   }, [])
 
@@ -81,39 +79,27 @@ export default function EditAdminUser (){
         <Grid container justify="center" item xs={12} lg={11} sm={11} style={{maxHeight: '150px'}}>
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => {handleType('create'); setSelectEquipment({})}}>
+              <button className={classes.btnOpc} onClick={() => handleType('create')}>
                 <FaPlus className={classes.icon} size={22} />
-                <Typography>CRIAR EQUIPAMENTO</Typography>
+                <Typography>CRIAR REGISTRO</Typography>
               </button>
             </Grid>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => {
-                handleType('edit'); 
-                loadEquipments()
-                }}>
-                <FaEdit className={classes.icon} size={22} />
-                <Typography>EDITAR EQUIPAMENTO</Typography>
-              </button>
-            </Grid>
-          </Grid>
-          
-          <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
-            <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => {handleType('index');setSelectEquipment({})}}>
+              <button className={classes.btnOpc} onClick={() => handleType('index')}>
                 <FaSearch className={classes.icon} size={22} />
-                <Typography>VISUALIZAR EQUIPAMENTO</Typography>
+                <Typography>VISUALIZAR REGISTROS</Typography>
               </button>
             </Grid>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-              <button className={classes.btnOpc} onClick={() => {handleType('delete');setSelectEquipment({})}}>
+              <button className={classes.btnOpc} onClick={() => handleType('delete')}>
                 <FaTrashRestore className={classes.icon} size={22} />
-                <Typography>EXCLUIR EQUIPAMENTO</Typography>
+                <Typography>EXCLUIR REGISTRO</Typography>
               </button>
             </Grid>
           </Grid>
@@ -122,23 +108,7 @@ export default function EditAdminUser (){
 
         {/* Table create and edit */}
         {type === 'create' && 
-          <FormEquipment title="Criar Equipamento" loadEquipments={loadEquipments} 
-          typeAction={type} nameButton={"Criar"}/>
-        }
-        {type === 'edit' && 
-         <>
-         <select style={{padding: '10px', backgroundColor:"#fff", marginTop:'20px'}} onChange={findSelectEquipment}>
-            <option>Escolha Equipamento</option>
-            {equipments.length && equipments.map(equipment => 
-            <option key={equipment.id} value={equipment.id}>
-              {equipment.name} - {equipment.code}
-            </option>
-        )}
-         </select>
-         
-         {selectEquipment && <FormEquipment nameButton={"Atualizar"}
-            equipment={selectEquipment} typeAction={type} title="Escolha equipamento para editar" />}
-         </>
+          <FormRegister user={user} equipments={equipments} />
         }
         {type === 'index' && 
           <>
