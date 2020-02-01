@@ -14,6 +14,8 @@ const schemaCreate = Yup.object().shape({
     .required("Nome Obrigatório"),
     last_name: Yup.string()
     .required("Sobrenome Obrigatório"),
+    cpf: Yup.string()
+    .required("CPF Obrigatório"),
     email: Yup.string('E-mail Inválido')
     .required('E-mail obrigatório'),
     password: Yup.string().min(6, "Senha").required("Senha Obrigatória"),
@@ -28,6 +30,8 @@ const schemaCreate = Yup.object().shape({
     .required("Nome Obrigatório"),
     last_name: Yup.string()
     .required("Sobrenome Obrigatório"),
+    cpf: Yup.string()
+    .required("CPF Obrigatório"),
     email: Yup.string('E-mail Inválido')
     .required('E-mail obrigatório'),
     office: Yup.string()
@@ -54,6 +58,7 @@ export default function FormUser({title, user={}, typeAction, nameButton}) {
     const initialData = {
         first_name: user.first_name ? user.first_name : '', 
         last_name: user.last_name ? user.last_name : '', 
+        cpf: user.cpf ? user.cpf : '', 
         registration:user.registration ? user.registration : '',
         email:user.email ? user.email : '', 
         office:user.office ? user.office : '',
@@ -72,6 +77,9 @@ export default function FormUser({title, user={}, typeAction, nameButton}) {
                 }})
                 setLoading(false)
                 toast.success("Usuário cadastrado com sucesso!")
+                setTimeout(function(){
+                    window.location.reload()
+                }, 3000)
             } catch(e){
                 setLoading(false)
                 toast.error("Erro ao cadastrar usuário")
@@ -86,7 +94,6 @@ export default function FormUser({title, user={}, typeAction, nameButton}) {
                 setTimeout(function(){
                     window.location.reload()
                 }, 3000)
-                
             } catch (e){
                 setLoading(false)
                 toast.error("Erro ao atualizar usuário")
@@ -104,6 +111,7 @@ export default function FormUser({title, user={}, typeAction, nameButton}) {
                       onSubmit={handleSubmit} initialData={initialData}>
                     <Input name="first_name" placeholder="Primeiro Nome" />
                     <Input name="last_name" placeholder="Último Nome" />
+                    <Input name="cpf" placeholder="CPF" />
                     <Input name="registration" placeholder="Registro" />
                     <Input name="email" type="email" placeholder="E-mail" />
                     {typeAction == 'create' &&

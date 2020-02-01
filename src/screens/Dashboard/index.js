@@ -123,7 +123,7 @@ export default function Dashboard(){
                             </Grid>
                             <Grid item xs={12} lg={12} sm={12} className={classes.defaultPad}>
                                 <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
-                                    <Typography>Total de Equipaentos Cadastrados</Typography>
+                                    <Typography>Total de Equipamentos Cadastrados</Typography>
                                     <div className={classes.cardBody}>
                                     <FaDesktop size={25} style={{marginRight: '15px'}}/>
                                         <Typography variant="h4">{countEquipments}</Typography>
