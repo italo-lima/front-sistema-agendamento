@@ -47,6 +47,7 @@ export default function EditAdminUser (){
   const classes = useStyles()
   const [type, setType] = useState(null)
   const [users, setUsers] = useState([])
+  const [userOn, setUserOn] = useState([])
   const [selectUser, setSelectUser] = useState({})
 
   const handleType = (type) => {
@@ -60,10 +61,12 @@ export default function EditAdminUser (){
 
   const loadUsers = async ()=>{
     const token = localStorage.getItem('@register:token');
+    const user = localStorage.getItem('@register:user');
     const resp = await api.get('users', {headers: {
               Authorization: `Bearer ${token}`,
     }})
     
+    setUserOn(JSON.parse(user).id)
     setUsers(resp.data)
   }
 
@@ -145,7 +148,7 @@ export default function EditAdminUser (){
           </>
         }
         {type === 'delete' && 
-          users.length>0 && <TableUser typeAction={'remove'} users={users} />
+          users.length>0 && <TableUser userOn={userOn} typeAction={'remove'} users={users} />
         }
       </Wrapper>
       </>

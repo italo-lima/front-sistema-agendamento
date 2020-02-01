@@ -8,7 +8,7 @@ import {FaPlus, FaTrashRestore, FaSearch, FaEdit} from "react-icons/fa"
 
 import api from "../../services/api"
 import FormRegister from "../../components/FormRegister"
-import TableEquipment from "../../components/TableEquipment"
+import TableRegister from "../../components/TableRegister"
 
 const useStyles = makeStyles({
   cardInfo: {
@@ -47,14 +47,23 @@ export default function EditAdminRegister (){
   const classes = useStyles()
   const [type, setType] = useState(null)
   const [equipments, setEquipments] = useState([])
+  const [registers, setRegisters] = useState([])
   const [user, setUser] = useState({})
 
   const handleType = (type) => {
       setType(type)
   }
 
-  const loadEquipments = async ()=>{
-    const token = localStorage.getItem('@register:token');
+  const loadRegisters = async (token)=>{
+    const resp = await api.get('register', {headers: {
+              Authorization: `Bearer ${token}`,
+    }})
+    
+    setRegisters(resp.data)
+  }
+
+  const loadEquipments = async (token)=>{
+    
     const resp = await api.get('equipment', {headers: {
               Authorization: `Bearer ${token}`,
     }})
@@ -63,10 +72,12 @@ export default function EditAdminRegister (){
   }
 
   useEffect(() => {
+    const token = localStorage.getItem('@register:token');
     const resp = localStorage.getItem('@register:user');
     const {id} = JSON.parse(resp)
-    setUser(id)
-    loadEquipments()
+    setUser(id);
+    loadRegisters(token);
+    loadEquipments(token);
   }, [])
 
   return (
@@ -99,7 +110,7 @@ export default function EditAdminRegister (){
             <Grid item xs={12} lg={12} sm={12} className={classes.cardInfo}>
               <button className={classes.btnOpc} onClick={() => handleType('delete')}>
                 <FaTrashRestore className={classes.icon} size={22} />
-                <Typography>EXCLUIR REGISTRO</Typography>
+                <Typography>CANCELAR REGISTRO</Typography>
               </button>
             </Grid>
           </Grid>
@@ -112,11 +123,11 @@ export default function EditAdminRegister (){
         }
         {type === 'index' && 
           <>
-            {equipments.length>0 && <TableEquipment typeAction={'index'} equipments={equipments} />}
+            {registers.length>0 && <TableRegister typeAction={'index'} registers={registers} />}
           </>
         }
         {type === 'delete' && 
-          equipments.length>0 && <TableEquipment typeAction={'remove'} equipments={equipments} />
+          registers.length>0 && <TableRegister typeAction={'remove'} registers={registers} />
         }
       </Wrapper>
       </>

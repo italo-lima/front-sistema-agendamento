@@ -3,10 +3,11 @@ import {Grid} from "@material-ui/core"
 import {Table} from "./styles"
 import {FaTrash} from "react-icons/fa"
 import {toast} from "react-toastify"
+import history from "../../services/history"
 
 import api from "../../services/api"
 
-export default function TableUser({users, typeAction}) {
+export default function TableUser({users, userOn,typeAction}) {
 
   const removeUser = async (id) => {
 
@@ -17,8 +18,16 @@ export default function TableUser({users, typeAction}) {
             Authorization: `Bearer ${token}`,
         }})
         toast.success("Usuário Excluído com sucesso!")
+        
         setTimeout(function() {
-          window.location.reload()
+          if(id == userOn){
+            localStorage.removeItem('@register:token');
+            localStorage.removeItem('@register:user');
+            history.push('/')
+          } else {
+            
+            window.location.reload()
+          }
         }, 3000)
     } catch(e){
         toast.error("Erro ao excluir usuário")

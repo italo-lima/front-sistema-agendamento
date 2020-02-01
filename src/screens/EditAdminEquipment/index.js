@@ -135,18 +135,28 @@ export default function EditAdminUser (){
             </option>
         )}
          </select>
-         
-         {selectEquipment && <FormEquipment nameButton={"Atualizar"}
-            equipment={selectEquipment} typeAction={type} title="Escolha equipamento para editar" />}
-         </>
+         {equipments.length ==0? <h2 style={{paddingTop: "15px"}}>Nenhum Equipamento Cadastrado</h2>
+         :
+         selectEquipment && <FormEquipment nameButton={"Atualizar"}
+            equipment={selectEquipment} typeAction={type} title="Escolha equipamento para editar" />
+        }
+        </>
         }
         {type === 'index' && 
           <>
-            {equipments.length>0 && <TableEquipment typeAction={'index'} equipments={equipments} />}
+            {equipments.length ==0? <h2 style={{paddingTop: "15px"}}>Nenhum Equipamento Cadastrado</h2>
+            :
+            <TableEquipment typeAction={'index'} equipments={equipments} />
+            }
           </>
         }
         {type === 'delete' && 
-          equipments.length>0 && <TableEquipment typeAction={'remove'} equipments={equipments} />
+        <>
+          {equipments.length ==0? <h2 style={{paddingTop: "15px"}}>Nenhum Equipamento Cadastrado</h2>
+          :
+          <TableEquipment typeAction={'remove'} equipments={equipments} />
+          }
+        </>
         }
       </Wrapper>
       </>

@@ -53,6 +53,9 @@ export default function FormEquipment({title, equipment={}, typeAction,nameButto
                 }})
                 setLoading(false)
                 toast.success("Equipamento cadastrado com sucesso!")
+                setTimeout(function(){
+                    window.location.reload()
+                }, 3000)
             } catch(e){
                 setLoading(false)
                 toast.error("Erro ao cadastrar equipamento")
