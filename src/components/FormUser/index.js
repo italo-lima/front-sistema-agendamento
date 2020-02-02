@@ -80,9 +80,11 @@ export default function FormUser({title, user={}, typeAction, nameButton}) {
                 setTimeout(function(){
                     window.location.reload()
                 }, 3000)
-            } catch(e){
+            } catch(error){
+                const { response } = error;
+                const { request, data, ...errorObject } = response;
                 setLoading(false)
-                toast.error("Erro ao cadastrar usuário")
+                toast.error(data.error)
             }
         } else if(typeAction == 'edit'){
             try {
@@ -94,9 +96,11 @@ export default function FormUser({title, user={}, typeAction, nameButton}) {
                 setTimeout(function(){
                     window.location.reload()
                 }, 3000)
-            } catch (e){
+            } catch (error){
+                const { response } = error;
+                const { request, data, ...errorObject } = response;
                 setLoading(false)
-                toast.error("Erro ao atualizar usuário")
+                toast.error(data.error)
             }
         }
     }

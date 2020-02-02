@@ -3,7 +3,7 @@ import {Grid} from "@material-ui/core"
 import {Table} from "./styles"
 import {FaTimesCircle} from "react-icons/fa"
 import {toast} from "react-toastify"
-import {format, parseISO} from "date-fns"
+import formatDate from "../../services/formatDate"
 
 import api from "../../services/api"
 
@@ -23,30 +23,30 @@ export default function TableRegister({registers, typeAction}) {
         setTimeout(function() {
           window.location.reload()
       }, 3000)
-    } catch(e){
-        toast.error("Existe registro nesse horário para este equipamento")
+    } catch(error){
+      const { response } = error;
+      const { request, data, ...errorObject } = response;
+      toast.error(data.error)
     }
   }
 
   useEffect(() => {
       const objUser = []
+      //depois analisar, trocar para pegar pelo checkin e checkout == false
       const registerActive = registers.filter(el => el.canceled_at == null && el)
 
       registerActive && registerActive.forEach(el => {
         var id = el.id
         var di = el.date_initial
-        var diParse = parseISO(di)
         var df = el.date_final
-        var dfParse = parseISO(df)
-        var date_initial = format(diParse, "dd/MM/yyyy - kk:mm:ss")
-        var date_final = format(dfParse, "dd/MM/yyyy - kk:mm:ss")
+        var date_initial = formatDate(di)
+        var date_final = formatDate(df)
         var name = el.user.first_name + ' ' + el.user.last_name
         var equip = el.equipment.name + '-' + el.equipment.code
         objUser.push({id, name, date_initial, date_final, equip})
       });
       setRegist(objUser)
   }, [])
-
 
   return (
     <Grid item container xs={12} lg={12} xs={12} justify="center" style={{bottom:'10px',overflow:'auto', padding: '10px 0px'}}>

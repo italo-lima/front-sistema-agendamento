@@ -1,6 +1,7 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Switch} from "react-router-dom"
 
+import api from "../services/api"
 import Route from "./Route"
 
 import Dashboard from "../screens/Dashboard"
@@ -13,13 +14,26 @@ import EditAdminEquipment from "../screens/EditAdminEquipment"
 import EditAdminRegister from "../screens/EditAdminRegister"
 
 export default function Routes(){
+    const [equipments, setEquipments] = useState([])
+
+    const loadEquipments = async () => {
+        const token = localStorage.getItem("@register:token")
+        const resp = await api.get('equipment', {headers: {
+            Authorization: `Bearer ${token}`}})
+        setEquipments(resp.data)
+    }
+
+    useEffect(()=> {
+        loadEquipments();
+    }, [])
+
     return(
         <Switch>
             <Route exact path='/' component={SignIn}/>
 
             <Route  path='/initial' component={Home} isPrivate/>
             <Route  path='/edit-profile' component={EditProfile} isPrivate/>
-            <Route  path='/register' component={Register} isPrivate/>
+            <Route  path='/register' component={() => <Register equipments={equipments} />} isPrivate/>
             <Route exact path='/admin' component={Dashboard} isPrivate/>
             <Route exact path='/admin/edit/user' component={EditAdminUser} isPrivate/>
             <Route exact path='/admin/edit/equipment' component={EditAdminEquipment} isPrivate/>

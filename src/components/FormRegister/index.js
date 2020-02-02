@@ -87,9 +87,11 @@ export default function FormRegister ({user, equipments}) {
             setTimeout(function(){
                 window.location.reload()
             }, 3000)
-        } catch(e){
+        } catch(error){
+            const { response } = error;
+            const { request, data, ...errorObject } = response;
             setLoading(false)
-            toast.error("Erro ao cadastrar registro")
+            toast.error(data.error)
         }
     }
 

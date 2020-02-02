@@ -3,24 +3,21 @@ import {darken} from "polished"
 
 export const Wrapper = styled.div`
 height: 100%;
+width: 100%;
 background: #f5f5f5;
 padding-top:90px;
 display:flex;
-align-items:center;
-justify-content:space-between;
 `;
 
 export const Content = styled.div`
 width: 100%;
-max-width: 460px;
+max-width: 260px;
 text-align: center;
 display: flex;
+flex-direction:column;
 background-color: #fff;
     
     form {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content:center;
         margin-top: 30px;
 
         input {
@@ -107,4 +104,9 @@ export const CardInfo = styled.div`
     p {
         padding: 5px;
     }
+`;
+
+export const Table = styled.table`
+    width:100%;
+    margin-top: 20px;
 `;

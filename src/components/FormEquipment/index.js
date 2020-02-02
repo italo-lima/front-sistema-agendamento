@@ -56,10 +56,12 @@ export default function FormEquipment({title, equipment={}, typeAction,nameButto
                 setTimeout(function(){
                     window.location.reload()
                 }, 3000)
-            } catch(e){
+            } catch(error){
+                const { response } = error;
+                const { request, data, ...errorObject } = response;
                 setLoading(false)
-                toast.error("Erro ao cadastrar equipamento")
-            }
+                toast.error(data.error)
+                }
         } else if(typeAction == 'edit'){
             try {
                 await api.put(`equipment/${equipment.id}`, data, {headers: {
@@ -70,9 +72,11 @@ export default function FormEquipment({title, equipment={}, typeAction,nameButto
                 setTimeout(function(){
                     window.location.reload()
                 }, 3000)
-            } catch (e){
+            } catch (error){
+                const { response } = error;
+                const { request, data, ...errorObject } = response;
                 setLoading(false)
-                toast.error("Erro ao atualizar equipamento")
+                toast.error(data.error)
             }
         }
     }

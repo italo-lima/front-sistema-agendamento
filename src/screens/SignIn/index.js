@@ -31,9 +31,11 @@ export default function SignIn() {
         localStorage.setItem('@register:user', JSON.stringify(response.data.user));
         setLoading(false);
         history.push('/initial')
-      } catch(e){
-        setLoading(false);
-        toast.error(JSON.stringify(e))
+      } catch(error){
+          const { response } = error;
+          const { request, data, ...errorObject } = response;
+          setLoading(false)
+          toast.error(data.error)
       }
   }
 

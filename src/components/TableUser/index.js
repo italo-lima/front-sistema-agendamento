@@ -29,8 +29,10 @@ export default function TableUser({users, userOn,typeAction}) {
             window.location.reload()
           }
         }, 3000)
-    } catch(e){
-        toast.error("Erro ao excluir usuário")
+    } catch(error){
+        const { response } = error;
+        const { request, data, ...errorObject } = response;
+        toast.error(data.error)
     }
   }
 

@@ -20,8 +20,10 @@ export default function TableEquipment({equipments, typeAction}) {
         setTimeout(function() {
           window.location.reload()
         }, 3000)
-    } catch(e){
-        toast.error("Erro ao excluir equipamento")
+    } catch(error){
+        const { response } = error;
+        const { request, data, ...errorObject } = response;
+        toast.error(data.error)
     }
   }
 
