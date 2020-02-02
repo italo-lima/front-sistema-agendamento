@@ -3,6 +3,7 @@ import {Switch} from "react-router-dom"
 
 import api from "../services/api"
 import Route from "./Route"
+import {isTokenValidation} from "../services/token"
 
 import Dashboard from "../screens/Dashboard"
 import Register from "../screens/Register"
@@ -24,6 +25,7 @@ export default function Routes(){
     }
 
     useEffect(()=> {
+        isTokenValidation();
         loadEquipments();
     }, [])
 

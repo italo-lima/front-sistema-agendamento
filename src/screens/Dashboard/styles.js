@@ -27,9 +27,25 @@ width:100%;
 padding:20px;
 height: 40vh;
 display:flex;
-justify-content:space-around;
+flex-direction: column;
 
 select {
     height: 30px;
 }
+`;
+
+export const NoneDesktop = styled.div`
+    display:none;
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display:block;
+    }
+`;
+
+export const NoneMobile = styled.div`
+    display:block;
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display:none;
+    }
 `;

@@ -8,13 +8,13 @@ import {Link} from 'react-router-dom'
 import api from "../../services/api"
 
 import Header from "../../components/Header"
-import {Menu, BoxInfo, Graph} from "./styles"
+import {Menu, BoxInfo, Graph, NoneDesktop, NoneMobile} from "./styles"
 
 const useStyles = makeStyles({
     card:{
         top:'0px',
         left: '0',
-        height:'100%',
+        height:'100%',  
     },
     menuRow:{
         display: 'flex',
@@ -59,27 +59,36 @@ const useStyles = makeStyles({
 export default function Dashboard(){
     const classes = useStyles();
     const [loading, setLoading] = useState(false)
-    const [countUsers, setCountUsers] = useState(false)
-    const [countEquipments, setCountEquipments] = useState(false)
+    const [infoInitial, setInfoInitial] = useState(false)
+    const [graphAllRegisters, setGraphAllRegisters] = useState([])
+    const [graphAllRegistersUsers, setGraphAllRegistersUsers] = useState([])
     
-    const loadUsers = async (token) => {
-        const users = await api.get('users', {headers: {
+    const loadInfoInitial = async (token) => {
+        const {data} = await api.get('dashboard/information-initial', {headers: {
             Authorization: `Bearer ${token}`}})
-        setCountUsers(users.data.length)
+        setInfoInitial(data)
     }
 
-    const loadEquipments = async (token) => {
-        const equipments = await api.get('equipment', {headers: {
+    const loadGraphicAllRegisters = async (token) => {
+        const {data} = await api.get('dashboard/all-registers', {headers: {
             Authorization: `Bearer ${token}`}})
-        setCountEquipments(equipments.data.length)
+        setGraphAllRegisters(data)
+    }
+
+    const loadGraphicAllRegistersUsers = async (token) => {
+        const {data} = await api.get('dashboard/all-registers-users', {headers: {
+            Authorization: `Bearer ${token}`}})
+        setGraphAllRegistersUsers([data])
     }
 
     useEffect(() => {
         const token = localStorage.getItem('@register:token');
 
-       loadUsers(token); 
-       loadEquipments(token);
+        loadGraphicAllRegistersUsers(token)
+        loadGraphicAllRegisters(token)
+        loadInfoInitial(token); 
     }, [])
+
 
     return(
         <>
@@ -117,7 +126,7 @@ export default function Dashboard(){
                                     <Typography>Total de Usuários Cadastrados</Typography>
                                     <div className={classes.cardBody}>
                                         <FaUsers size={25} style={{marginRight: '15px'}}/>
-                                            <Typography variant="h4">{countUsers}</Typography>
+                                            <Typography variant="h4">{infoInitial.countUser}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -126,7 +135,7 @@ export default function Dashboard(){
                                     <Typography>Total de Equipamentos Cadastrados</Typography>
                                     <div className={classes.cardBody}>
                                     <FaDesktop size={25} style={{marginRight: '15px'}}/>
-                                        <Typography variant="h4">{countEquipments}</Typography>
+                                        <Typography variant="h4">{infoInitial.countEquipments}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -135,7 +144,7 @@ export default function Dashboard(){
                                     <Typography>Total de Agendamentos - Hoje</Typography>
                                     <div className={classes.cardBody}>
                                         <FaPaste size={25} style={{marginRight: '15px'}}/>
-                                        <Typography variant="h4" >12</Typography>
+                                        <Typography variant="h4" >{infoInitial.countRegisters}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -144,43 +153,54 @@ export default function Dashboard(){
                         <Grid container justify="space-between" style={{paddingTop:'30px', flexWrap:'wrap'}}>
                             <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad2x}>
                                 <Graph>
-                                    <p>Gráfico 1</p>
-                                    <select>
-                                        <option>Opção 1</option>
-                                        <option>Opção 2</option>
-                                        <option>Opção 3</option>
-                                    </select>
+                                    <p style={{textAlign:'center'}}>
+                                        Número de Registros por Equipamento
+                                    </p>
+                                    {graphAllRegisters.length >0 && 
+                                    <>
+                                        <NoneMobile>
+                                        <BarChart
+                                            data={graphAllRegisters}
+                                            width={400}
+                                            height={240}
+                                            margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
+                                        </NoneMobile>
+                                        <NoneDesktop>
+                                        <BarChart
+                                            data={graphAllRegisters}
+                                            width={250}
+                                            height={180}
+                                            margin={{top: 10, bottom: 30, left: 20, right: 10}}/>
+                                        </NoneDesktop>
+                                    </>
+                                    }
                                 </Graph>
                             </Grid> 
                             <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad2x}>
                                 <Graph>
-                                    <p>Gráfico 2</p>
-                                    <select>
-                                        <option>Opção 1</option>
-                                        <option>Opção 2</option>
-                                        <option>Opção 3</option>
-                                    </select>
-                                </Graph>
-                            </Grid>
-
-                            <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad2x}>
-                                <Graph>
-                                    <p>Gráfico 3</p>
-                                    <select>
-                                        <option>Opção 1</option>
-                                        <option>Opção 2</option>
-                                        <option>Opção 3</option>
-                                    </select>
-                                </Graph>
-                            </Grid> 
-                            <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad2x}>
-                                <Graph>
-                                    <p>Gráfico 3</p>
-                                    <select>
-                                        <option>Opção 1</option>
-                                        <option>Opção 2</option>
-                                        <option>Opção 3</option>
-                                    </select>
+                                    <p style={{textAlign:'center'}}>
+                                        Número de Registros por Equipamento
+                                    </p>
+                                    {!!graphAllRegistersUsers && 
+                                    <>  {console.log("entrouuu")}
+                                        <NoneMobile>
+                                        <PieChart
+                                            data={graphAllRegistersUsers[0]}
+                                            width={400}
+                                            height={240}
+                                            margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                            sort={null}/>
+                                        </NoneMobile>
+                                        <NoneDesktop>
+                                        <PieChart
+                                            data={graphAllRegistersUsers[0]}
+                                            width={250}
+                                            height={180}
+                                            margin={{top: 10, bottom: 30, left: 20, right: 10}}
+                                            sort={null}/>
+                                        </NoneDesktop>
+                                    </>
+                                    }
                                 </Graph>
                             </Grid>
                         </Grid>
