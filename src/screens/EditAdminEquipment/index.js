@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {Wrapper} from "./styles"
+import {Wrapper, NoneDesktop, NoneMobile} from "./styles"
 import Header from "../../components/Header"
 import {Typography, Grid} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     padding: "30px 0px",
     display:"flex",
-    justifyContent:"center"
+    textAlign:"center"
 },
   icon:{
     margin: '10px'
@@ -86,6 +86,12 @@ export default function EditAdminUser (){
                 <Typography>CRIAR EQUIPAMENTO</Typography>
               </button>
             </Grid>
+            <NoneDesktop style={{display:"none !important"}}>
+              {type === 'create' && 
+                <FormEquipment title="Criar Equipamento" loadEquipments={loadEquipments} 
+                typeAction={type} nameButton={"Criar"}/>
+              }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -98,6 +104,25 @@ export default function EditAdminUser (){
                 <Typography>EDITAR EQUIPAMENTO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'edit' && 
+              <>
+              <select style={{padding: '10px', backgroundColor:"#fff", marginTop:'20px'}} onChange={findSelectEquipment}>
+                  <option>Escolha Equipamento</option>
+                  {equipments.length && equipments.map(equipment => 
+                  <option key={equipment.id} value={equipment.id}>
+                    {equipment.name} - {equipment.code}
+                  </option>
+              )}
+              </select>
+              {equipments.length ==0? <h2 style={{paddingTop: "15px"}}>Nenhum Equipamento Cadastrado</h2>
+              :
+              selectEquipment && <FormEquipment nameButton={"Atualizar"}
+                  equipment={selectEquipment} typeAction={type} title="Escolha equipamento para editar" />
+              }
+              </>
+              }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -107,6 +132,16 @@ export default function EditAdminUser (){
                 <Typography>VISUALIZAR EQUIPAMENTO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'index' && 
+              <>
+                {equipments.length ==0? <h2 style={{paddingTop: "15px"}}>Nenhum Equipamento Cadastrado</h2>
+                :
+                <TableEquipment typeAction={'index'} equipments={equipments} />
+                }
+              </>
+            }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -116,10 +151,21 @@ export default function EditAdminUser (){
                 <Typography>EXCLUIR EQUIPAMENTO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'delete' && 
+              <>
+                {equipments.length ==0? <h2 style={{paddingTop: "15px"}}>Nenhum Equipamento Cadastrado</h2>
+                :
+                <TableEquipment typeAction={'remove'} equipments={equipments} />
+                }
+              </>
+              }
+            </NoneDesktop>
           </Grid>
         
         </Grid>
-
+        
+        <NoneMobile>
         {/* Table create and edit */}
         {type === 'create' && 
           <FormEquipment title="Criar Equipamento" loadEquipments={loadEquipments} 
@@ -158,6 +204,7 @@ export default function EditAdminUser (){
           }
         </>
         }
+        </NoneMobile>
       </Wrapper>
       </>
     )

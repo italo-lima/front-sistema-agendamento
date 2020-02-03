@@ -10,7 +10,6 @@ import * as Yup from "yup"
 import api from "../../services/api"
 import {toast} from "react-toastify"
 import formatDate from "../../services/formatDate"
-import {FaTimesCircle} from "react-icons/fa"
 import {parseISO} from "date-fns"
 
 const useStyles = makeStyles({

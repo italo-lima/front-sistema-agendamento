@@ -72,3 +72,30 @@ display: flex;
         }
     }
 `
+
+export const NoneDesktop = styled.div`
+    display:none !important;
+    display:flex ;
+    align-items:center ;
+    flex-direction:column ;
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display:block ;
+    }
+`;
+
+export const NoneMobile = styled.div`
+    display:block ;
+    display:flex ;
+    align-items:center ;
+    flex-direction:column ;
+    width:100%;
+
+    select{
+        max-width:180px;
+    }
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display:none ;
+    }
+`;

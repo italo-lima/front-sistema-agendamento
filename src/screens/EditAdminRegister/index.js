@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
-import {Wrapper} from "./styles"
+import {Wrapper, NoneDesktop, NoneMobile} from "./styles"
 import Header from "../../components/Header"
 import {Typography, Grid} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
-import {FaPlus, FaTrashRestore, FaSearch, FaEdit} from "react-icons/fa"
+import {FaPlus, FaTrashRestore, FaSearch} from "react-icons/fa"
 
 import api from "../../services/api"
 import FormRegister from "../../components/FormRegister"
@@ -13,10 +13,7 @@ import TableRegister from "../../components/TableRegister"
 const useStyles = makeStyles({
   cardInfo: {
     backgroundColor: '#fff',
-    display:'flex',
     height:'90px',
-    alignItems:"center",
-    justifyContent:"center"
 },
   defaultPad:{
     padding:'10px 20px'
@@ -26,7 +23,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     padding: "30px 0px",
     display:"flex",
-    justifyContent:"center"
+    textAlign:"center"
 },
   icon:{
     margin: '10px'
@@ -95,6 +92,11 @@ export default function EditAdminRegister (){
                 <Typography>CRIAR REGISTRO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'create' && 
+              <FormRegister user={user} equipments={equipments} />
+            }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -104,6 +106,13 @@ export default function EditAdminRegister (){
                 <Typography>VISUALIZAR REGISTROS</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+              {type === 'index' && 
+                <>
+                  {registers.length>0 && <TableRegister typeAction={'index'} registers={registers} />}
+                </>
+              }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -112,12 +121,17 @@ export default function EditAdminRegister (){
                 <FaTrashRestore className={classes.icon} size={22} />
                 <Typography>CANCELAR REGISTRO</Typography>
               </button>
+              <NoneDesktop>
+              {type === 'delete' && 
+              registers.length>0 && <TableRegister typeAction={'remove'} registers={registers} />
+            }
+            </NoneDesktop>
             </Grid>
           </Grid>
-        
         </Grid>
-
+        
         {/* Table create and edit */}
+        <NoneMobile>
         {type === 'create' && 
           <FormRegister user={user} equipments={equipments} />
         }
@@ -129,6 +143,7 @@ export default function EditAdminRegister (){
         {type === 'delete' && 
           registers.length>0 && <TableRegister typeAction={'remove'} registers={registers} />
         }
+        </NoneMobile>
       </Wrapper>
       </>
     )

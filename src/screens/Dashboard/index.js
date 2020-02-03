@@ -151,7 +151,7 @@ export default function Dashboard(){
                         </BoxInfo>
 
                         <Grid container justify="space-between" style={{paddingTop:'30px', flexWrap:'wrap'}}>
-                            <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad2x}>
+                            <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad}>
                                 <Graph>
                                     <p style={{textAlign:'center'}}>
                                         Número de Registros por Equipamento
@@ -163,20 +163,20 @@ export default function Dashboard(){
                                             data={graphAllRegisters}
                                             width={400}
                                             height={240}
-                                            margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
+                                            margin={{top: 10, bottom: 30, left: 10, right: 10}}/>
                                         </NoneMobile>
                                         <NoneDesktop>
                                         <BarChart
                                             data={graphAllRegisters}
                                             width={250}
                                             height={180}
-                                            margin={{top: 10, bottom: 30, left: 20, right: 10}}/>
+                                            margin={{top: 10, bottom: 30, left: 10, right: 10}}/>
                                         </NoneDesktop>
                                     </>
                                     }
                                 </Graph>
                             </Grid> 
-                            <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad2x}>
+                            <Grid item xs={12} lg={6} sm={6} className={classes.defaultPad}>
                                 <Graph>
                                     <p style={{textAlign:'center'}}>
                                         Número de Registros por Equipamento

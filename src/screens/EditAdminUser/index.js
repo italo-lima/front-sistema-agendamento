@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {Wrapper} from "./styles"
+import {Wrapper, NoneDesktop, NoneMobile} from "./styles"
 import Header from "../../components/Header"
 import {Typography, Grid} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
@@ -25,8 +25,7 @@ const useStyles = makeStyles({
     color:"#fff",
     fontWeight: "bold",
     padding: "30px 0px",
-    display:"flex",
-    justifyContent:"center"
+    textAlign:"center"
 },
   icon:{
     margin: '10px'
@@ -89,6 +88,11 @@ export default function EditAdminUser (){
                 <Typography>CRIAR USUÁRIO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+              {type === 'create' && 
+                <FormUser title="Criar Usuário" typeAction={type} nameButton={"Criar"}/>
+              }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -101,6 +105,23 @@ export default function EditAdminUser (){
                 <Typography>EDITAR USUÁRIO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'edit' && 
+              <>
+              <select style={{padding: '10px', backgroundColor:"#fff", marginTop:'20px'}} onChange={findSelectUser}>
+                  <option>Escolha Usuário</option>
+                  {users.length && users.map(user => 
+                  <option key={user.id} value={user.id}>
+                    {user.first_name} {user.last_name}
+                  </option>
+              )}
+              </select>
+              
+              {selectUser && <FormUser nameButton={"Atualizar"}
+                  user={selectUser} typeAction={type} title="Escolha usuário para editar" />}
+              </>
+              }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -110,6 +131,13 @@ export default function EditAdminUser (){
                 <Typography>VISUALIZAR USUÁRIOS</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'index' && 
+                <>
+                  {users.length>0 && <TableUser typeAction={'index'} users={users} />}
+                </>
+              }
+            </NoneDesktop>
           </Grid>
           
           <Grid item xs={12} lg={3} sm={3} className={classes.defaultPad}>
@@ -119,10 +147,15 @@ export default function EditAdminUser (){
                 <Typography>EXCLUIR USUÁRIO</Typography>
               </button>
             </Grid>
+            <NoneDesktop>
+            {type === 'delete' && 
+              users.length>0 && <TableUser userOn={userOn} typeAction={'remove'} users={users} />
+            }
+            </NoneDesktop>
           </Grid>
         
         </Grid>
-
+        <NoneMobile>
         {/* Table create and edit */}
         {type === 'create' && 
           <FormUser title="Criar Usuário" typeAction={type} nameButton={"Criar"}/>
@@ -150,6 +183,7 @@ export default function EditAdminUser (){
         {type === 'delete' && 
           users.length>0 && <TableUser userOn={userOn} typeAction={'remove'} users={users} />
         }
+        </NoneMobile>
       </Wrapper>
       </>
     )

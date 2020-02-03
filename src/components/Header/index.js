@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Drawer, Typography,Toolbar, IconButton, Grid, useMediaQuery} from '@material-ui/core';
-import {FaBars, FaInfo, FaCheck, FaTag, FaUserFriends, FaUserLock} from "react-icons/fa"
+import {FaBars, FaInfo, FaCheck, FaTag, FaUserFriends, FaUserLock, FaUserCog} from "react-icons/fa"
 import {FaPowerOff} from "react-icons/fa"
 import { useTheme } from '@material-ui/core/styles';
 import {Link} from "react-router-dom"
@@ -165,6 +165,10 @@ export default function TemporaryDrawer() {
       <div><Link to="/register" className={classes.menuRow}>
         <FaCheck size={22}/><h1 className={classes.menuText}>Agendar Equipamento</h1></Link>
       </div>
+      <div><Link to='/edit-profile' className={classes.menuRow}>
+            <FaUserCog size={22}/><h1 className={classes.menuText}>Editar Perfil</h1>
+          </Link>
+      </div>  
       <div><a className={classes.menuRow} href="initial#equip">
           <FaUserFriends size={22}/><h1 className={classes.menuText}>Equipe</h1></a>
       </div>

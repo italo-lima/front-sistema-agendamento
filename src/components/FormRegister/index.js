@@ -97,7 +97,6 @@ export default function FormRegister ({user, equipments}) {
 
    return (
        <>
-       <Header />
             <Grid>
                 <Typography style={{padding:'10px'}} variant="h5">Criar Registro</Typography>
             </Grid>

@@ -6,14 +6,15 @@ export const Menu = styled.div`
 
     @media only screen and (min-width:150px) and (max-width:750px){
        display:flex;
-       justify-content:space-around;
+       flex-direction:column;
+       padding-left: calc(100% - 70%)
     }
 `;
 
 export const BoxInfo = styled.div`
     padding-top:15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 
     @media only screen and (min-width:150px) and (max-width:750px){
         flex-wrap: wrap;

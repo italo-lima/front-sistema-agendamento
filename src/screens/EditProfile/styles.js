@@ -3,23 +3,40 @@ import {darken} from "polished"
 
 export const Wrapper = styled.div`
 height: 100%;
-background: #f5f5f5;
-padding-top:60px;
-display:flex;
-align-items:center;
-flex-direction:column;
+background: linear-gradient(-60deg, darken(0.08, #f5f5f5), #f5f5f5);
+display: flex;
+align-items: center;
+justify-content: center;
 `;
 
 export const Content = styled.div`
 width: 100%;
-max-width: 420px;
-text-align: center;
-display: flex;
-    
+max-width: 490px;
+text-align:center;
+
+    div {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+
+        p{
+            font-size:28px;
+            font-weight:bold;
+        }
+    }
+
     form {
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
         margin-top: 30px;
+
+        div {
+            display: flex;
+            align-items:center;
+            justify-content: space-between;
+            padding: 10px;
+        }
 
         input {
             background: rgba(0,0,0,.1);
@@ -28,11 +45,9 @@ display: flex;
             height: 44px;
             padding: 0 15px;
             color: #000;
-            margin: 10px;
-            max-width: 190px;
 
             &::placeholder{
-                color: rgba(000,000,000,.7)
+                color: rgba(0,0,0,.9)
             }
         }
 
@@ -45,13 +60,12 @@ display: flex;
 
         button{
             height: 44px;
-            margin: 5px 10px 0;
+            padding: 0px 20px;
             background: ${darken(0.08, '#0095DA')};
             font-weight: bold;
-            color: #000;
+            color: #fff;
             border-radius: 4px;
-            font-size: 20px;
-            padding:10px 15px;
+            font-size: 16px;
             border: none;
             transition: background 0.8s;
 
@@ -62,8 +76,8 @@ display: flex;
 
         a {
             color: #000;
-            margin-top: 15px;
-            font-size: 15px;
+            margin-top: 25px;
+            font-size: 18px;
             opacity: 0.8;
 
             &:hover{
@@ -72,27 +86,3 @@ display: flex;
         }
     }
 `
-export const NoneDesktop = styled.div`
-    display:none !important;
-    display:flex;
-    align-items:center;
-
-    @media only screen and (min-width:150px) and (max-width:750px){
-        display:block !important;
-        padding-left: calc(100% - 80%);
-        overflow-x:auto
-    }
-`;
-
-export const NoneMobile = styled.div`
-    display:block ;
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-
-    @media only screen and (min-width:150px) and (max-width:750px){
-        display:none;
-    }
-`;
