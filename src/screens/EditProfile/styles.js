@@ -14,6 +14,10 @@ width: 100%;
 max-width: 490px;
 text-align:center;
 
+    h3 {
+        display: none;
+    }
+
     div {
         display: flex;
         justify-content: center;
@@ -84,5 +88,40 @@ text-align:center;
                 opacity: 1;
             }
         }
+    }
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        margin-top: 160px;
+        h3 {
+            display: block;
+        }
+        div {
+            padding: 0;
+
+            img {
+                  display: none;
+            }
+        }
+        form {
+            margin-top: 10px;
+
+            div {
+                flex-direction: column;
+                padding: 0px 10px;
+
+                input{
+                    margin: 5px;
+                }
+            }
+
+            button {
+                margin-top: 5px;
+            }
+        
+        a { 
+            margin-top: 5px;
+            padding: 10px;
+        }
+    }
     }
 `

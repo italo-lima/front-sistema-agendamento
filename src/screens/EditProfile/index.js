@@ -88,7 +88,8 @@ export default function EditProfile() {
         <Header />
         <Wrapper>
             <Content>
-                <div >
+                <h3>Edite seu perfil</h3>
+                <div style={{display: "flex"}}>
                     <img src={logo} alt="Register" style={{width: "110px", height:'80px', paddingRight: '30px'}}/> 
                     <img src={ufal} alt="UFAL" style={{width: "60px", height:'80px'}}/> 
                 </div>

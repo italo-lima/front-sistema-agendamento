@@ -38,7 +38,6 @@ const useStyles = makeStyles({
         backgroundColor:"#fff",
         padding: '15px',
         textAlign:'center',
-        margin: '15px',
         display: 'flex',
         flexDirection:'column',
         alignItems: 'center'
@@ -47,7 +46,6 @@ const useStyles = makeStyles({
         backgroundColor:"#fff",
         padding: '15px',
         textAlign:'center',
-        margin: '15px',
         display: 'flex',
         flexDirection: 'column', 
         justifyContent: 'flex-start'
@@ -142,8 +140,7 @@ export default function Register ({equipments}) {
             Authorization: `Bearer ${token}`,
         }})
         
-        setRegisters(data)
-        //->/register/:action/:id                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+        setRegisters(data)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     }
 
     const actionRegister = async (id, action) => {

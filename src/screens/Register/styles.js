@@ -7,6 +7,12 @@ width: 100%;
 background: #f5f5f5;
 padding-top:90px;
 display:flex;
+
+@media only screen and (min-width:150px) and (max-width:750px){
+        display:flex;
+        flex-direction:column;
+        padding-top:70px;
+    }
 `;
 
 export const Content = styled.div`
@@ -109,4 +115,35 @@ export const CardInfo = styled.div`
 export const Table = styled.table`
     width:100%;
     margin-top: 20px;
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+       
+            display:none;
+        
+    }
+`;
+
+export const NoneDesktop = styled.div`
+    display:none !important;
+    display:flex;
+    align-items:center;
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display:block !important;
+        padding-left: calc(100% - 80%);
+        overflow-x:auto
+    }
+`;
+
+export const NoneMobile = styled.div`
+    display:block ;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+
+    @media only screen and (min-width:150px) and (max-width:750px){
+        display:none;
+    }
 `;
